@@ -77,8 +77,8 @@ mounted() {
 </script>
 
 <template>
-  <main>
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 full-height">
+  <main class="full-height">
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
       <!-- Error behandling -->
       <div v-if="error" class="text-red-500 font-bold">Ett fel inträffades: {{ error }}</div>
       <div v-if="text && text.length > 0" class="text-red-500 font-bold text-lg text-center">{{ text }}</div>
