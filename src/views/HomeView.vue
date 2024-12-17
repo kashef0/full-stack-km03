@@ -78,12 +78,12 @@ mounted() {
 
 <template>
   <main>
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
-      <div v-if="is_loading" class="flex items-center justify-center mb-6">
-      <div class="loader border-t-blue-500 border-4 border-gray-200 rounded-full w-8 h-8 animate-spin"></div>
-      <p class="ml-4 text-gray-600">Laddning...</p>
-    </div>
-      <!-- Error behandling -->
+      <div v-if="is_loading" class="flex items-center justify-center mb-6 full-height">
+        <div class="loader border-t-blue-500 border-4 border-gray-200 rounded-full w-8 h-8 animate-spin"></div>
+        <p class="ml-4 text-gray-600">Laddning...</p>
+      </div>
+    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 " v-else>
+      <!-- Error behandling --> 
       <div v-if="error" class="text-red-500 font-bold">Ett fel inträffades: {{ error }}</div>
       <div v-if="text && text.length > 0" class="text-red-500 font-bold text-lg text-center">{{ text }}</div>
       <!-- laddning status -->
