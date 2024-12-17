@@ -77,7 +77,15 @@ mounted() {
 </script>
 
 <template>
-  <main class="full-height">
+  <main>
+     <div>
+    <!-- Loading Animation -->
+    <div v-if="is_loading" class="loading-overlay">
+      <div class="dog-run"></div>
+    </div>
+
+    <!-- Your main content goes here -->
+    <div v-else>
     <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6">
       <!-- Error behandling -->
       <div v-if="error" class="text-red-500 font-bold">Ett fel inträffades: {{ error }}</div>
@@ -142,6 +150,8 @@ mounted() {
         <p class="ml-4 text-gray-600">Inga data finns att visa...</p>
     </div>
   </div>
+    </div>
+  </div>
 
   </main>
 </template>
@@ -152,6 +162,37 @@ mounted() {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* The dog running animation */
+.dog-run {
+  width: 100px;
+  height: 100px;
+  background: url('/path/to/your/dog-image.png') no-repeat;
+  background-size: contain;
+  animation: run 2s infinite linear;
+}
+
+@keyframes run {
+  0% {
+    transform: translateX(-100px);
+  }
+  100% {
+    transform: translateX(100vw);
+  }
 }
 
 </style>
