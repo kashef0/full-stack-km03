@@ -21,6 +21,7 @@ export default {
   methods: {
     // Hämta filmerintresse lista från API via metoden `fetchData`
     async fetchData() {
+       console.log("Fetching data...");
       this.is_loading = true;
       try {
         const res = await fetch(`${url}/movie`, {
@@ -69,9 +70,9 @@ export default {
       }, 3000);
     },
   },
-mounted() {
-    this.fetchData();
-  }
+  mounted() {
+      this.fetchData();
+    }
 }
 
 </script>
@@ -82,7 +83,7 @@ mounted() {
         <div class="loader border-t-blue-500 border-4 border-gray-200 rounded-full w-8 h-8 animate-spin"></div>
         <p class="ml-4 text-gray-600">Laddning...</p>
       </div>
-    <div class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 " v-else>
+    <div v-else class="max-w-4xl mx-auto bg-white shadow-md rounded-lg p-6 " >
       <!-- Error behandling --> 
       <div v-if="error" class="text-red-500 font-bold">Ett fel inträffades: {{ error }}</div>
       <div v-if="text && text.length > 0" class="text-red-500 font-bold text-lg text-center">{{ text }}</div>
