@@ -121,7 +121,7 @@ watch(searchQuery, () => {
         @click="searchMoviesAndShows"
         class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
       >
-        Search
+        söka
       </button>
     </div>
 
@@ -138,7 +138,7 @@ watch(searchQuery, () => {
 
     <!-- Resultat Sektion -->
     <div v-if="combinedData.length > 0">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">Movies and TV Shows</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">Movies och TV Shows</h2>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <li
           v-for="item in combinedData"
@@ -183,7 +183,7 @@ watch(searchQuery, () => {
         @click="changePage(currentPage - 1)"
         class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
       >
-        Previous
+        föregående
       </button>
       <span class="mx-4 text-lg">{{ currentPage }} of {{ totalPages }}</span>
       <button
@@ -191,7 +191,7 @@ watch(searchQuery, () => {
         @click="changePage(currentPage + 1)"
         class="px-4 py-2 bg-gray-200 rounded-lg hover:bg-gray-300 disabled:opacity-50"
       >
-        Next
+        nästa
       </button>
     </div>
   </div>
