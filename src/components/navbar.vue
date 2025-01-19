@@ -13,11 +13,11 @@
           >
             <span class="absolute -inset-0.5"></span>
             <span class="sr-only">Open main menu</span>
-            <!--
-              Icon when menu is closed.
+            
+              <!-- Icon when menu is closed.
   
-              Menu open: "hidden", Menu closed: "block"
-            -->
+              Menu open: "hidden", Menu closed: "block" -->
+           
             <svg
               class="block h-6 w-6"
               fill="none"

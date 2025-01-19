@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div class="form_container" id="app">
         <form method="POST" @submit.prevent="createItem">
             <label for="movie">Movie namn:</label>
@@ -74,8 +74,7 @@
                     });
                     const data = await res.json();
                     if (res.ok) {
-                        this.items.push(data);  // Add item to the list
-                        // Reset form fields
+                        this.items.push(data);  
                         alert(`Framgång:  ${data.message}`);
                         this.movie= "";
                         this.priority= null;
@@ -98,4 +97,54 @@
 
 <style src="../assets/Form.css">
 
-</style>
+</style> -->
+
+<template>
+    <div>
+        <AddMovieForm @submit-movie="createMovie" />
+        <div v-if="errors.length > 0">
+            <h3>Vänligen åtgärda följande fel:</h3>
+            <ul>
+                <li v-for="(error, index) in errors" :key="index">{{ error }}</li>
+            </ul>
+        </div>
+    </div>
+</template>
+
+<script>
+import AddMovieForm from "../components/AddMovieForm.vue";
+
+export default {
+    components: {
+        AddMovieForm
+    },
+    data() {
+        return {
+            errors: []
+        };
+    },
+    methods: {
+        async createMovie(movieData) {
+            const url = import.meta.env.VITE_URL + "/create"; // API URL
+            try {
+                const res = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(movieData)
+                });
+
+                if (!res.ok) {
+                    throw new Error("Kunde inte skapa filmen.");
+                }
+
+                const data = await res.json();
+                alert(`Framgång: ${data.message}`);
+            } catch (error) {
+                this.errors.push("Ett fel inträffade vid skapandet. Försök igen senare.");
+            }
+        }
+    }
+};
+</script>

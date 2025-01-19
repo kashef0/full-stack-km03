@@ -3,13 +3,13 @@ import { ref, watch, onMounted } from 'vue';
 
 const apiKey = import.meta.env.VITE_API_KEY;
 const searchQuery = ref('');
-const currentPage = ref(1); // Spåra den aktuella sidan
-const totalPages = ref(1); // Totalt antal sidor från API:et
-const combinedData = ref([]); // Lagrar kombinerade film- och TV-programdata
+const currentPage = ref(1); 
+const totalPages = ref(1); 
+const combinedData = ref([]); 
 const isLoading = ref(false);
 const error = ref(null);
 
-// Hämta data för filmer och TV-program baserat på sidnummer
+
 const fetchMoviesAndShows = async (page = 1) => {
   isLoading.value = true;
   error.value = null;
@@ -26,13 +26,12 @@ const fetchMoviesAndShows = async (page = 1) => {
     const movieData = await movieResponse.json();
     const tvShowData = await tvShowResponse.json();
 
-    // slå ihop resultaten från filmen och TV-serien
     combinedData.value = [
       ...movieData.results.map((movie) => ({ ...movie, type: 'movie' })),
       ...tvShowData.results.map((show) => ({ ...show, type: 'tv' })),
     ];
 
-    totalPages.value = movieData.total_pages; // Ställ in totalt antal sidor från filmsvaret
+    totalPages.value = movieData.total_pages;
 
   } catch (err) {
     error.value = 'Failed to load data';
@@ -41,7 +40,7 @@ const fetchMoviesAndShows = async (page = 1) => {
   }
 };
 
-// Sök efter filmer och TV-program globalt
+
 const searchMoviesAndShows = async () => {
   isLoading.value = true;
   error.value = null;
@@ -55,7 +54,7 @@ const searchMoviesAndShows = async () => {
       return;
     }
 
-    // Hämta data från både film- och TV-programslutpunkter med sökfrågan
+
     const movieResponse = await fetch(
       `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${encodeURIComponent(query)}&language=en-US&page=1`
     );
@@ -66,7 +65,7 @@ const searchMoviesAndShows = async () => {
     const movieData = await movieResponse.json();
     const tvShowData = await tvShowResponse.json();
 
-    // slå ihop resulatat
+ 
     combinedData.value = [
       ...movieData.results.map((movie) => ({ ...movie, type: 'movie' })),
       ...tvShowData.results.map((show) => ({ ...show, type: 'tv' })),
@@ -79,27 +78,27 @@ const searchMoviesAndShows = async () => {
 };
 
 
-// Hantera sidbyte med paginering
+
 const changePage = (page) => {
   if (page >= 1 && page <= totalPages.value) {
     currentPage.value = page;
-    fetchMoviesAndShows(page); // ladda om nya sidan
+    fetchMoviesAndShows(page); 
   }
 };
 
 
-// ladda den första sidan med populära filmer och TV-program
+
 onMounted(() => {
   fetchMoviesAndShows(currentPage.value);
   
 });
 
-// Hålla koll efter ändringar i sökfrågan och uppdatera resultaten
+
 watch(searchQuery, () => {
   if (searchQuery.value) {
     searchMoviesAndShows();
   } else {
-    fetchMoviesAndShows(currentPage.value); // Återställ till att visa alla resultat när sökningen är rensad
+    fetchMoviesAndShows(currentPage.value); 
   }
 });
 
@@ -109,7 +108,7 @@ watch(searchQuery, () => {
 
 <template>
   <div class="max-w-4xl mx-auto py-10 px-4">
-    <!-- Sök Input Sektion -->
+
     <div class="flex items-center space-x-4 mb-6">
       <input
         type="text"
@@ -125,18 +124,17 @@ watch(searchQuery, () => {
       </button>
     </div>
 
-    <!-- Felmeddelande -->
+
     <div v-if="error" class="bg-red-100 text-red-700 border border-red-300 rounded-lg p-4 mb-6">
       <p>{{ error }}</p>
     </div>
 
-    <!-- Laddning Sektion -->
     <div v-if="isLoading" class="flex items-center justify-center mb-6">
       <div class="loader border-t-blue-500 border-4 border-gray-200 rounded-full w-8 h-8 animate-spin"></div>
       <p class="ml-4 text-gray-600">Laddning...</p>
     </div>
 
-    <!-- Resultat Sektion -->
+
     <div v-if="combinedData.length > 0">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">Movies och TV Shows</h2>
       <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -145,7 +143,6 @@ watch(searchQuery, () => {
           :key="item.id"
           class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105"
         >
-          <!-- Poster Image -->
           <div class="relative">
             <img
               v-if="item.poster_path"
@@ -153,7 +150,6 @@ watch(searchQuery, () => {
               :alt="item.title || item.name"
               class="w-full h-64 object-cover"
             />
-            <!-- Film/TV Show Indicator -->
             <div
               class="absolute top-2 left-2 px-3 py-1 text-xs font-bold text-white rounded-full"
               :class="{
@@ -165,7 +161,7 @@ watch(searchQuery, () => {
             </div>
           </div>
           
-          <!-- Detaljer -->
+
           <div class="p-4">
             <h3 class="text-lg font-bold text-gray-800 mb-2">{{ item.title || item.name }}</h3>
             <p class="text-sm text-gray-600 mb-4">
@@ -176,7 +172,6 @@ watch(searchQuery, () => {
       </ul>
     </div>
 
-    <!-- Sidnavigering -->
     <div v-if="totalPages > 1" class="flex justify-center mt-6">
       <button
         :disabled="currentPage === 1"
